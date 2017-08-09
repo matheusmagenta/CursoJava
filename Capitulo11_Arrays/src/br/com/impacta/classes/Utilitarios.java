@@ -65,6 +65,36 @@ public class Utilitarios {
 		
 		
 		}
-	}
 
+	//------------------------------------------------------
+	public static double buscarMaior(double[] valores){
+		double maior = 0;
+		if(valores.length >= 1){
+			maior = valores[0];		
+			}
+			for (int i = 0; i < valores.length; i++){ 
+				if (valores[i] > maior){
+					maior = valores[i];
+				}
+			}	
+		return maior;
+		}
+	
+
+
+	// ---------------------------------------------------------
+	//método que receba uma quantidade qualquer de parâmetros
+	// inteiros e retorne sua soma
+	//parametro: varagrs
+	// regras: só pode haver 1 parametro deste tipo e deve
+	// ser o último, caso haja outros parametros no método
+	public static int somarElementos(int... valores){
+		int soma = 0;
+		for (int i = 0; i < valores.length; i++) {
+			soma += valores[i];
+		}
+		return soma;
+			
+		}
+}
 
