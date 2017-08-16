@@ -1,0 +1,153 @@
+package br.com.impacta.classes;
+
+import br.com.impacta.enumeracoes.Sexo;
+
+public class Pessoa implements Comparable<Pessoa>{
+	
+	private String  nome;
+	private int idade;
+	private Sexo sexo;
+	private Endereco endereco;
+	private int codigo;
+	
+	private static int CONTADOR = 1;
+	//é boa prática escrever variável static ou final em MAIÚSCULO, é uma variável compartilhada
+	// comum a todos os objetos. é diferente de cada um ter um nome. mudou para um, mudou para todos
+	
+	// private static final String CURSO = "JAVA";
+	// o atributo quando é final, significa que ele é inalterado; ele precisa ter algum valor
+	// ou na hora de declarar ou depois. ele não tem amparo de nenhum objeto 
+	
+		// Construtores
+	public Pessoa(String nome){
+		this.setCodigo(CONTADOR++);
+		this.setNome(nome);
+		}
+	
+	public Pessoa (String nome,int idade){
+		this(nome);
+		
+		try {
+			this.setIdade(idade);
+		} catch (IllegalArgumentException e){
+			e.initCause(new ArithmeticException("Valor informado é negativo"));
+		}
+		
+	}
+	public Pessoa (String nome,int idade, Sexo sexo){
+		this(nome, idade);
+		this.setSexo(sexo);
+	}
+	public Pessoa (String nome,int idade, Sexo sexo, Endereco endereco){
+		this(nome, idade , sexo); // usado somente em construtores, e necess
+		this.setEndereco(endereco);
+	}
+	
+	//o que definie um atributo que nada tem a ver necessariamente é a static)
+	
+	//getters e setters
+	
+	
+	
+	public int getCodigo(){
+		return codigo;
+	}
+	
+	private void setCodigo(int codigo) {
+		this.codigo = codigo;  
+		}
+	
+	public String getNome() {
+			return nome;
+		}
+		
+		
+	public void setNome(String nome) {
+		if (nome == null || nome.trim().length() == 0){
+			throw new NullPointerException("Nome inválido");
+		}
+		this.nome = nome;
+	}
+
+	public int getIdade() {
+		return idade;
+	}
+
+	public void setIdade(int idade) {
+		if (idade < 0) {
+			throw new IllegalArgumentException("A idade "  + idade + " é inválida");
+			}
+		this.idade = idade;
+		}
+
+	public Sexo getSexo() {
+		return sexo;
+	}
+
+	public void setSexo(Sexo sexo) {
+		if(sexo == null){
+			throw new NullPointerException("Sexo inválido");
+		}
+		this.sexo = sexo;
+	}
+	
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		if(endereco == null){
+			throw new NullPointerException("Endereço inválido");
+		}
+			this.endereco = endereco;
+	}
+	
+	public String exibir(){
+		return exibir("DADOS PESSOAIS");	
+	}
+	
+	public String exibir(String titulo){
+		
+		String resposta = titulo + "\n\nCodigo: " + this.getCodigo() +
+				          "\n\nNome: " + this.getNome() +
+						  "\nIdade: " + this.getIdade() + 
+                          "\nSexo: " + this.getSexo();
+		
+		if (this.getEndereco() != null) {
+			              resposta += "\n\nDADOS DO ENDEREÇO" + 
+                          "\n" + this.getEndereco().exibirEndereco(); 
+		}
+		return resposta;	
+	}
+
+//	@Override
+//	public int compareTo(Pessoa o) {
+//		// TODO Auto-generated method stub
+//		return this.getNome().compareTo(o.getNome());
+//	}
+//	
+	
+	@Override
+	public int compareTo(Pessoa o) {
+		Integer idade1 = this.getIdade();
+		Integer idade2 = o.getIdade();
+	
+		if(this.getNome().compareTo(o.getNome()) == 0){
+			return idade1.compareTo(idade2);
+		}
+		return this.getNome().compareTo(o.getNome());
+	
+			
+	}
+	
+	// ele é herdado por funcionário, por aluno etc. se vc quiser mudar no aluno, é só override na classe aluno
+	@Override
+	public String toString(){
+		return "Nome: " + this.getNome() + ", Idade: " + this.getIdade();
+		
+			}
+	
+	
+	
+}
+
